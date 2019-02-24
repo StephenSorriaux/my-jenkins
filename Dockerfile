@@ -1,4 +1,4 @@
-FROM jenkinsci/jenkins:lts
+FROM jenkins/jenkins:lts
  
 USER root
 RUN apt-get update -qq \
@@ -9,5 +9,8 @@ RUN add-apt-repository \
    $(lsb_release -cs) \
    stable"
 RUN apt-get update  -qq \
-    && apt-get install docker-ce -y
-RUN usermod -aG docker jenkins
+    && apt-get install docker-ce -y \
+    && usermod -aG docker jenkins
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+    && python get-pip.py \
+    && pip install virtualenv
